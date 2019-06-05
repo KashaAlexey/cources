@@ -1,12 +1,14 @@
-package by.cources.spring.task3.spring.repository;
+package by.cources.spring.task4.spring.repository;
 
-import by.cources.spring.task3.spring.model.Author;
+import by.cources.spring.task4.spring.model.Author;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class JpaAuthorRepository implements AuthorRepository {
@@ -15,6 +17,7 @@ public class JpaAuthorRepository implements AuthorRepository {
   private EntityManager em;
 
   @Override
+  @Transactional
   public List<Author> findWithBookOlderThan(Long value) {
     String hql = "select a from Author a join a.books b where b.publishedIn >= :value";
     TypedQuery<Author> query = em.createQuery(hql, Author.class);
@@ -23,31 +26,25 @@ public class JpaAuthorRepository implements AuthorRepository {
   }
 
   @Override
+  @Transactional
   public Optional<Author> findById(Long id) {
     return Optional.ofNullable(em.find(Author.class, id));
   }
 
   @Override
+  @Transactional
   public List<Author> findAll() {
     return em.createQuery("select a from Author a", Author.class).getResultList();
   }
 
   @Override
-  public List<Author> findAuthorByLang(String value) {
-    String hql = "select a from Author a join a.books b "
-        + "where b.language = (select a from Language a where a.name=:value)";
-    TypedQuery<Author> query = em.createQuery(hql, Author.class);
-    query.setParameter("value", value);
-    return query.getResultList();
-  }
-
-  @Override
-  public List<Author> findAuthorByLangByDate(String value, Long year) {
-    String hql = "select distinct a from Author a join a.books b "
-        + "where b.language.name = :value and b.publishedIn > :year";
-    TypedQuery<Author> query = em.createQuery(hql, Author.class);
-    query.setParameter("value", value);
-    query.setParameter("year", year);
-    return query.getResultList();
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public Author save(Author author) {
+    if (author.getId() == null) {
+      em.persist(author);
+      return author;
+    } else {
+      return em.merge(author);
+    }
   }
 }

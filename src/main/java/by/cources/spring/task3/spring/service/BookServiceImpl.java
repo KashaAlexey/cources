@@ -44,36 +44,6 @@ public class BookServiceImpl implements BookService {
     return authorRepository.findAuthorByLangByDate(value, year);
   }
 
-//  @Transactional
-//  @Override
-//  public List<Book> findBooksAll() {
-//    return toList(bookRepository.findAll());
-//  }
-//
-//  @Override
-//  @Transactional
-//  public List<Author> findAuthorsWithBookOlderThan(Long value) {
-//    return authorRepository.findWithBookOlderThan(value);
-//  }
-//
-//  @Override
-//  @Transactional
-//  public List<Book> findBooksWithBookOlderThan(Long value) {
-//    return bookRepository.findOlderThan(value);
-//  }
-//
-//  @Override
-//  @Transactional
-//  public List<Book> findBooksWithBookName(String value) {
-//    return bookRepository.findByName(value);
-//  }
-//
-//  @Override
-//  @Transactional
-//  public List<Author> findAuthorsAll() {
-//    return authorRepository.findAll();
-//  }
-
   private <T> List<T> toList(Iterable<T> result) {
     return StreamSupport
         .stream(result.spliterator(), false)

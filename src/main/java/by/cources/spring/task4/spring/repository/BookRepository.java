@@ -1,6 +1,6 @@
-package by.cources.spring.task3.spring.repository;
+package by.cources.spring.task4.spring.repository;
 
-import by.cources.spring.task3.spring.model.Book;
+import by.cources.spring.task4.spring.model.Book;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,6 +15,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
   List<Book> findByName(String name);
 
-  @Query("select b from Book b where b.language.name = :value")
-  List<Book> findBooksByLang(@Param("value") String value);
+  Book save(Book book);
 }

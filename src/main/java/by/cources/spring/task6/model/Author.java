@@ -1,14 +1,13 @@
-package by.cources.spring.task4.spring.model;
+package by.cources.spring.task6.model;
 
 import java.time.LocalDate;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "author")
@@ -24,22 +23,9 @@ public class Author {
 
   @Column(name = "last_name")
   private String lastName;
-
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   @Column(name = "date_of_birth")
   private LocalDate dateOfBirth;
-
-//  @OneToMany(targetEntity = Book.class)
-//  @JoinColumn(name = "author_id",referencedColumnName="id")
-  @OneToMany(mappedBy="author")
-  private List<Book> books;
-
-  public List<Book> getBooks() {
-    return books;
-  }
-
-  public void setBooks(List<Book> books) {
-    this.books = books;
-  }
 
   public Long getId() {
     return id;

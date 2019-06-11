@@ -1,4 +1,4 @@
-package by.cources.spring.task4.spring.model;
+package by.cources.spring.task5.spring.model;
 
 import java.time.LocalDate;
 import java.util.List;

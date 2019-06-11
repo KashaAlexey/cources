@@ -1,13 +1,11 @@
-package by.cources.spring.task4.spring;
+package by.cources.spring.task6;
 
 import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -18,11 +16,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@PropertySource("classpath:task4/database.properties")
-@ComponentScan("by.cources.spring.task4")
 @EnableJpaRepositories
 @EnableTransactionManagement
-public class BookConfig {
+public class BookJpaConfig {
 
   @Autowired
   Environment environment;
@@ -52,22 +48,24 @@ public class BookConfig {
     vendorAdapter.setShowSql(true);
 //    vendorAdapter.setGenerateDdl(true);
 
-
     LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
     factory.setJpaVendorAdapter(vendorAdapter);
     factory.setPackagesToScan(getClass().getPackage().getName());
     factory.setDataSource(dataSource());
+    factory.setJpaProperties(getProperties());
+    return factory;
+  }
 
+  private Properties getProperties() {
     Properties jpaProperties = new Properties();
     jpaProperties.put("javax.persistence.schema-generation.database.action", "create");
     jpaProperties.put("javax.persistence.schema-generation.create-source", "script");
-    jpaProperties.put("javax.persistence.schema-generation.create-script-source", "/task4/create.sql");
+    jpaProperties.put("javax.persistence.schema-generation.create-script-source", "/task6/create.sql");
 //    jpaProperties.put("javax.persistence.schema-generation.drop-source", "script");
 //    jpaProperties.put("javax.persistence.schema-generation.drop-script-source", "drop.sql");
     jpaProperties.put("javax.persistence.schema-generation.drop-source", "script");
-    jpaProperties.put("javax.persistence.sql-load-script-source", "/task4/data.sql");
-    factory.setJpaProperties(jpaProperties);
-    return factory;
+    jpaProperties.put("javax.persistence.sql-load-script-source", "/task6/data.sql");
+    return jpaProperties;
   }
 
   @Bean

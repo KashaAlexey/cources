@@ -1,6 +1,6 @@
-package by.cources.spring.task4.spring.repository;
+package by.cources.spring.task5.spring.repository;
 
-import by.cources.spring.task4.spring.model.Author;
+import by.cources.spring.task5.spring.model.Author;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;

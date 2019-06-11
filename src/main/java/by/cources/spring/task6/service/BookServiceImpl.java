@@ -1,14 +1,11 @@
-package by.cources.spring.task4.spring.service;
+package by.cources.spring.task6.service;
 
-import by.cources.spring.task4.spring.model.Author;
-import by.cources.spring.task4.spring.model.Book;
-import by.cources.spring.task4.spring.model.Language;
-import by.cources.spring.task4.spring.repository.AuthorRepository;
-import by.cources.spring.task4.spring.repository.BookRepository;
+import by.cources.spring.task6.model.Author;
+import by.cources.spring.task6.model.Book;
+import by.cources.spring.task6.repository.AuthorRepository;
+import by.cources.spring.task6.repository.BookRepository;
 import java.util.ArrayList;
 import java.util.List;
-
-import by.cources.spring.task4.spring.repository.LanguageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +15,10 @@ public class BookServiceImpl implements BookService {
 
   private final BookRepository bookRepository;
   private final AuthorRepository authorRepository;
-  private final LanguageRepository languageRepository;
 
-  public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository, LanguageRepository languageRepository) {
+  public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository) {
     this.bookRepository = bookRepository;
     this.authorRepository = authorRepository;
-    this.languageRepository = languageRepository;
   }
 
   @Transactional
@@ -36,12 +31,6 @@ public class BookServiceImpl implements BookService {
   @Override
   public Author saveAuthor(Author author) {
     return authorRepository.save(author);
-  }
-
-
-  @Override
-  public Language saveLanguage(Language language) {
-    return languageRepository.save(language);
   }
 
   @Override
@@ -71,6 +60,16 @@ public class BookServiceImpl implements BookService {
   @Override
   public Book saveBook(Book book) {
     return bookRepository.save(book);
+  }
+
+  @Override
+  public void delete(Book book){
+     bookRepository.delete(book);
+  }
+
+  @Override
+  public Book getBookById(Long id){
+    return bookRepository.getBookById(id);
   }
 
   private <T> List<T> toList(Iterable<T> items) {

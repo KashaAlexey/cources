@@ -1,5 +1,6 @@
-package by.cources.spring.task4.spring.model;
+package by.cources.spring.task5.spring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import static javax.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "book")
@@ -21,7 +24,11 @@ public class Book {
   private String name;
   @ManyToOne
   @JoinColumn(name = "author_id")
+  //@JsonIgnore
   private Author author;
+  @ManyToOne(cascade = {PERSIST, MERGE, REFRESH, DETACH})
+  @JoinColumn(name = "language_id")
+  private Language language;
 
   @Column(name = "published_in")
   private Long publishedIn;
@@ -58,12 +65,20 @@ public class Book {
     this.author = author;
   }
 
+  public Language getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(Language language) {
+    this.language = language;
+  }
+
   @Override
   public String toString() {
     return "Book{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", publishedIn=" + publishedIn +
-        '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", publishedIn=" + publishedIn +
+            '}';
   }
 }

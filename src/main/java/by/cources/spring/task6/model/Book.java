@@ -1,7 +1,10 @@
-package by.cources.spring.task4.spring.model;
+package by.cources.spring.task6.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +22,10 @@ public class Book {
   private Long id;
   @Column(name = "name")
   private String name;
-  @ManyToOne
+
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id")
+  @JsonIgnore
   private Author author;
 
   @Column(name = "published_in")

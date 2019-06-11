@@ -6,7 +6,7 @@ CREATE TABLE author (
 );
 
 create table language (
-  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  id              NUMBER(7) auto_increment    NOT NULL PRIMARY KEY,
   name            VARCHAR2(50)  NOT NULL
 );
 

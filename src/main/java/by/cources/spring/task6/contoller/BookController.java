@@ -4,6 +4,7 @@ import by.cources.spring.task6.model.Author;
 import by.cources.spring.task6.model.Book;
 import by.cources.spring.task6.service.BookService;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -34,7 +35,11 @@ public class BookController {
     Book result = new Book();
     result.setPublishedIn(2019L);
     result.setAuthor(new Author());
-    return new ModelAndView("book-form", "book", result);
+    Map<String, Object> model = new HashMap<>();
+    model.put("book", result);
+    model.put("authors", bookService.findAuthorsAll());
+
+    return new ModelAndView("book-form", model);
   }
 
   @RequestMapping(value = "/edit", method = RequestMethod.POST)
@@ -43,6 +48,7 @@ public class BookController {
       for (ObjectError error : result.getAllErrors()) {
         LOGGER.error(error.toString());
       }
+      model.put("authors", bookService.findAuthorsAll());
       model.addAttribute("errorMessage", "something wrong");
 //      return "error";
       return "book-form";
@@ -73,4 +79,24 @@ public class BookController {
     modelAndView.addObject("book", bookService.getBookById(id));
     return modelAndView;
   }
+
+  @RequestMapping(value = "/update", method = RequestMethod.POST)
+  public ModelAndView update(@ModelAttribute("book") Book book, BindingResult result, ModelMap model) {
+    ModelAndView modelAndView = new ModelAndView("redirect:/book/list");
+    bookService.update(book);
+    return modelAndView;
+  }
+
+  @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+  public ModelAndView updateById(@PathVariable("id") Long id) {
+    ModelAndView modelAndView = new ModelAndView("book-update");
+    modelAndView.addObject("book", bookService.getBookById(id));
+    modelAndView.addObject("authors", bookService.findAuthorsAll());
+    Book result = new Book();
+    Map<String, Object> model = new HashMap<>();
+    model.put("book", result);
+    model.put("authors", bookService.findAuthorsAll());
+    return modelAndView;
+  }
+
 }

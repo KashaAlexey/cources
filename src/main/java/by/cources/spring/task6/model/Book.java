@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "book")
@@ -21,14 +23,16 @@ public class Book {
   @Column(name = "id")
   private Long id;
   @Column(name = "name")
+  @Size(min = 1, message = "required")
   private String name;
 
-  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @ManyToOne(/*cascade = CascadeType.ALL, fetch = FetchType.LAZY*/)
   @JoinColumn(name = "author_id")
   @JsonIgnore
   private Author author;
 
   @Column(name = "published_in")
+  @NotNull(message = "my custom message")
   private Long publishedIn;
 
   public Long getPublishedIn() {

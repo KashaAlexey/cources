@@ -11,8 +11,8 @@
 
  <a href="/sp-cources/book/edit/">Insert new book</a><br>
 	<c:forEach var="book" items="${booksVariable}">
-    	<li>${book.id}. ${book.name} (${book.publishedIn})
-    	    &nbsp; <a href="/sp-cources/book/edit/update/${book.id}">Update</a>   /
+        <li>${book.id}. ${book.name} (${book.publishedIn}) ${book.author.firstName} ${book.author.lastName}
+    	    &nbsp; <a href="/sp-cources/book/update/${book.id}">Update</a>   /
             &nbsp; <a href="/sp-cources/book/delete/${book.id}">Delete</a>
         </li>
     </c:forEach>

@@ -3,21 +3,21 @@
 
 <html>
 <body>
+  <a href="/sp-cources/logout">Logout</a>
+  <table  style="font-family: arial; line-height: 2.0; ">
+	  <tr>
+		  <td style="vertical-align: top">
+			  <h2>Book</h2>
 
-<table  style="font-family: arial; line-height: 2.0; ">
-    <tr>
-        <td style="vertical-align: top">
- <h2>Book</h2>
+			  <a href="/sp-cources/book/edit/">Insert new book</a><br>
+			  <c:forEach var="book" items="${booksVariable}">
+				  <li>${book.id}. ${book.name} (${book.publishedIn}) ${book.author.firstName} ${book.author.lastName}
+					  &nbsp; <a href="/sp-cources/book/update/${book.id}">Update</a>   /
+					  &nbsp; <a href="/sp-cources/book/delete/${book.id}">Delete</a>
+				  </li>
+			  </c:forEach>
 
- <a href="/sp-cources/book/edit/">Insert new book</a><br>
-	<c:forEach var="book" items="${booksVariable}">
-        <li>${book.id}. ${book.name} (${book.publishedIn}) ${book.author.firstName} ${book.author.lastName}
-    	    &nbsp; <a href="/sp-cources/book/update/${book.id}">Update</a>   /
-            &nbsp; <a href="/sp-cources/book/delete/${book.id}">Delete</a>
-        </li>
-    </c:forEach>
-
- </td>
- </tr></table>
+		  </td>
+	  </tr></table>
 </body>
 </html>

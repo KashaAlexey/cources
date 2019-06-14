@@ -10,7 +10,8 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan("by.cources.spring.task6")
 @Import({
     BookJpaConfig.class,
-    BookWebConfig.class
+    BookWebConfig.class,
+    BookSecurityConfig.class
 })
 public class BookConfig {
 

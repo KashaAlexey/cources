@@ -30,6 +30,33 @@ public class BookController {
     this.bookService = bookService;
   }
 
+//  @RequestMapping(value = "/add", method = RequestMethod.GET)
+//  public ModelAndView add() {
+//    Book result = new Book();
+//    result.setPublishedIn(2019L);
+//    result.setAuthor(new Author());
+//    Map<String, Object> model = new HashMap<>();
+//    model.put("book", result);
+//    model.put("authors", bookService.findAuthorsAll());
+//
+//    return new ModelAndView("book-form", model);
+//  }
+
+//  @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+//  public ModelAndView edit(@PathVariable Long id) {
+//    Book result = bookService.findBookById(id).orElseGet(Book::new);
+//    Map<String, Object> model = new HashMap<>();
+//    model.put("book", result);
+//    model.put("authors", bookService.findAuthorsAll());
+//
+//    return new ModelAndView("book-form", model);
+//  }
+
+  @RequestMapping(value = "/index", method = RequestMethod.GET)
+  public ModelAndView home() {
+    return new ModelAndView("index");
+  }
+
   @RequestMapping(value = "/edit", method = RequestMethod.GET)
   public ModelAndView form() {
     Book result = new Book();
@@ -43,7 +70,7 @@ public class BookController {
   }
 
   @RequestMapping(value = "/edit", method = RequestMethod.POST)
-  public String submit(@ModelAttribute("book") Book book, BindingResult result, ModelMap model) {
+  public String submit( @ModelAttribute("book") Book book, BindingResult result, ModelMap model) {
     if (result.hasErrors()) {
       for (ObjectError error : result.getAllErrors()) {
         LOGGER.error(error.toString());
